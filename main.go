@@ -94,7 +94,7 @@ func main() {
 	}
 
 	if hasMessage {
-		commitMsg := fmt.Sprintf("%s %s: %s", commitType.Emoji, commitType.Name, message)
+		commitMsg := fmt.Sprintf("%s %s: %s", commitType.Emoji, commitType.DisplayName, message)
 		if ticket != "" {
 			commitMsg += fmt.Sprintf(" [%s]", ticket)
 		}
