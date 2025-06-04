@@ -9,5 +9,3 @@ updates:
       prefix: "chore(deps)"
     labels:
       - "dependencies"
-    reviewers:
-      - "@your-github-username"
