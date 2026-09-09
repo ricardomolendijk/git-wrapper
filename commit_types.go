@@ -4,20 +4,21 @@ import "strings"
 
 // CommitType represents a commit type with metadata
 type CommitType struct {
-	Name        string
-	Short       string
-	Emoji       string
-	DisplayName string
+    Name        string
+    Short       string
+    Emoji       string
+    DisplayName string
 }
 
 var commitTypes = []CommitType{
-	{"feature", "feat", "🚀", "Feature"},
-	{"fix", "bug", "🐛", "Bugfix"},
-	{"chore", "chore", "🔧", "Chore"},
-	{"documentation", "docs", "📚", "Documentation"},
-	{"refactor", "refactor", "♻️", "Refactor"},
-	{"test", "test", "🧪", "Test"},
-	{"perf", "perf", "⚡", "Performance"},
+    {"feature", "feat", "🚀", "Feature"},
+    // Use conventional commit token "fix" instead of custom "bug"
+    {"fix", "fix", "🐛", "Bugfix"},
+    {"chore", "chore", "🔧", "Chore"},
+    {"documentation", "docs", "📚", "Documentation"},
+    {"refactor", "refactor", "♻️", "Refactor"},
+    {"test", "test", "🧪", "Test"},
+    {"perf", "perf", "⚡", "Performance"},
 	{"ci", "ci", "📦", "CI/CD"},
 	{"config", "cfg", "🔧", "Configuration Change"},
 	{"network", "net", "🌐", "Network Change"},
@@ -48,11 +49,15 @@ var commitTypes = []CommitType{
 }
 
 func resolveCommitType(input string) *CommitType {
-	input = strings.ToLower(input)
-	for _, ct := range commitTypes {
-		if ct.Name == input || ct.Short == input {
-			return &ct
-		}
-	}
-	return nil
+    input = strings.ToLower(input)
+    // Map legacy/alias tokens to their conventional equivalents
+    if input == "bug" {
+        input = "fix"
+    }
+    for _, ct := range commitTypes {
+        if ct.Name == input || ct.Short == input {
+            return &ct
+        }
+    }
+    return nil
 }
