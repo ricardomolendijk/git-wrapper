@@ -34,3 +34,24 @@ func formatTicket2(ticket string) string {
 
 	return strings.Join(formattedTickets, "\n")
 }
+
+// formatTicketFooter formats the ticket list as a Conventional Commits footer line:
+// Refs: ABC-123, DEF-456
+func formatTicketFooter(ticket string) string {
+    if ticket == "" {
+        return ""
+    }
+
+    tickets := strings.Split(ticket, ",")
+    var formatted []string
+    for _, t := range tickets {
+        tt := strings.ToUpper(strings.TrimSpace(t))
+        if tt != "" {
+            formatted = append(formatted, tt)
+        }
+    }
+    if len(formatted) == 0 {
+        return ""
+    }
+    return fmt.Sprintf("Refs: %s", strings.Join(formatted, ", "))
+}
